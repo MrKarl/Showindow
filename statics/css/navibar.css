@@ -1,0 +1,79 @@
+.navibar{
+	margin:0px;
+	font-size: 15px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#000000;
+}
+ul.navibar_list
+{
+	list-style-type:none;
+	margin-left: 250px;
+	padding-top: 10px;
+	overflow:hidden;
+}
+li.navibar_item{
+	text-align:center;
+	padding:5px 5px 5px 5px;
+	text-decoration:none;
+	text-transform:uppercase;
+	float:left;
+
+}
+a.navibar_item, a.navibar_brand, a.navibar_id{
+	display: block;
+}
+a.navibar_item:link,a.navibar_item:visited,a.navibar_item
+{
+	width:100px;
+	height:15px;
+	text-align:center;
+	padding:5px;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#FFFFFF;
+}
+a.navibar_item:hover,a.navibar_item:active
+{
+	border-radius: 3px;
+	color:#696969;
+	background-color: #d3d3d3;
+}
+a.navibar_brand:link,a.navibar_brand:visited,a.navibar_brand
+{
+	font-size: 20px;
+	font-family: serif;
+	font-weight: bold;
+	width:100px;
+	height:23px;
+	text-align:center;
+	padding:5px;
+	margin-bottom: 5px;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#FFFFFF;
+}
+a.navibar_brand:hover,a.navibar_brand:active
+{
+	color:#a9a9a9;
+}
+a.navibar_id:link,a.navibar_id:visited,a.navibar_id
+{
+
+	font-size: 15px;
+	margin-left: 240px;
+	width:100px;
+	height:23px;
+	text-align:center;
+	padding:5px;
+	margin-bottom: 5px;
+	text-decoration:none;
+	color:#FFFFFF;
+}
+a.navibar_id:hover,a.navibar_id:active
+{
+	color:#a9a9a9;
+}

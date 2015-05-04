@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<!-- <link href="/assets/css/jquery.rating.css" rel="stylesheet" type="text/css"> -->
+
+	
+	<link rel="stylesheet" type="text/css" href="/statics/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/statics/css/main.css">
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/reset.css">
+
+	<!-- <link rel="stylesheet" type="text/css" href="/statics/css/bootstrap.css" media="screen"> -->
+
+	
+	<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet" />
+	<link href="http://getbootstrap.com/2.3.2/assets/js/google-code-prettify/prettify.css" rel="stylesheet" />
+	<link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet" />
+	<link href="/assets/css/bootstrap-modal.css" rel="stylesheet" />
+
+<!--	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="/statics/js/bootstrap.min.js"></script>-->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+	<script src="/assets/js/bootstrap-modalmanager.js"></script>
+	<script src="/assets/js/bootstrap-modal.js"></script>
+
+	<script type="text/javascript" src="http://getbootstrap.com/2.3.2/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"></script>
+    
+	<script src="/assets/js/html5.js"></script>
+	<script src="/assets/js/respond.js"></script>
+
+	<script type="text/javascript">
+
+		$(function(){
+			$.fn.modalmanager.defaults.resize = true;
+
+			$('[data-source]').each(function(){
+			var $this = $(this),
+			$source = $($this.data('source'));
+
+			var text = [];
+			$source.each(function(){
+			var $s = $(this);
+			if ($s.attr('type') == 'text/javascript'){
+			text.push($s.html().replace(/(\n)*/, ''));
+			} else {
+			text.push($s.clone().wrap('<div>').parent().html());
+			}
+			});
+
+			$this.text(text.join('\n\n').replace(/\t/g, '    '));
+			});
+
+			prettyPrint();
+		});
+	</script>
+
+
+	<script id="dynamic" type="text/javascript">
+		$('.dynamic .demo').click(function(){
+			var tmpl = [
+			// tabindex is required for focus
+			'<div class="modal hide fade" tabindex="-1">',
+			'<div class="modal-header">',
+			'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>',
+			'<h3>Modal header</h3>', 
+			'</div>',
+			'<div class="modal-body">',
+			'<p>Test</p>',
+			'</div>',
+			'<div class="modal-footer">',
+			'<a href="#" data-dismiss="modal" class="btn">Close</a>',
+			'<a href="#" class="btn btn-primary">Save changes</a>',
+			'</div>',
+			'</div>'
+			].join('');
+			$(tmpl).modal();
+		});
+	</script>
+
+		
+	<script>
+		function mk_modal(item_id,image_path,gender,card_id){
+			$.ajax({
+					url: "/main/mk_modal",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
+					dataType: "html",
+					data:{
+						"item_id":item_id,
+						"image_path":image_path,
+						"gender":gender,
+						"card_id":card_id,
+						"table":"table_card",
+					},
+					complete:function(xhr,textStatus){
+							if(xhr.responseText == 1000)
+							{
+								alert('댓글 내용을 입력하세요');
+							}
+							else if(xhr.responseText == 2000){
+								alert('다시 입력하세요');
+							}
+							else if(xhr.responseText == 9000){
+								alert('로그인하셔야 합니다.');
+							}
+							else{
+								var height = $(window).scrollTop();// $(document).height();
+								$(".modal_contents").html(xhr.responseText);
+								$("#myModal").css("top",height);
+							}
+					}
+			});
+			card_num=card_id;
+			$.ajax({
+					url: "/main/get_comment",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
+					dataType: "html",
+					data:{
+						"card_id":card_id,
+					},
+					complete:function(xhr,textStatus){
+							if(xhr.responseText == 1000)
+							{
+								alert('댓글 내용을 입력하세요');
+							}
+							else if(xhr.responseText == 2000){
+								alert('다시 입력하세요');
+							}
+							else if(xhr.responseText == 9000){
+								alert('로그인하셔야 합니다.');
+							}
+							else{
+								$(".replysection").html(xhr.responseText);							
+							}
+					}
+			});
+
+			$('#myModal').modal('show');
+
+		}	
+		window.fbAsyncInit = function() {
+			FB.init({
+				// http://ec2-54-238-154-75.ap-northeast-1.compute.amazonaws.com/ 259326767583647
+				// http://ec2-54-238-143-240.ap-northeast-1.compute.amazonaws.com/ 259326767583647
+			// appId      : '232266203646743'(명주),	259326767583647(판기)			// 시험용 앱
+				appId      : '259326767583647',					// 실제 서비스 앱
+				status     : true, // check login status
+				cookie     : true, // enable cookies to allow the server to access the session
+				xfbml      : true  // parse XFBML
+				});
+		};
+		// Load the SDK asynchronously
+		(function(d){
+			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement('script'); js.id = id; js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			ref.parentNode.insertBefore(js, ref);
+		}(document));
+
+		/*function logout(){
+			var id_type = <?php echo $data['id_type']; ?>;
+			if(id_type == 0){
+				FB.logout(function(response){
+					location.replace("/intro");
+				});
+			}else{
+				location.replace("/intro");
+			}
+		}		*/
+
+		function logout(){
+			var id_type =<?php echo $data['id_type']; ?>;
+
+			FB.getLoginStatus(function(response) {
+				console.log(response.status);
+			  if (response.status === 'connected') {
+
+			    // the user is logged in and has authenticated your
+			    // app, and response.authResponse supplies
+			    // the user's ID, a valid access token, a signed
+			    // request, and the time the access token 
+			    // and signed request each expire
+
+			    if(id_type == 0){
+			    	console.log(response.status+"~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					FB.logout(function(response){
+						location.replace("/intro");
+				});
+			}
+			  } else if (response.status === 'not_authorized') {
+			    // the user is logged in to Facebook, 
+			    // but has not authenticated your app
+				location.replace("/intro");
+			  } else {
+			    // the user isn't logged in to Facebook.
+			    location.replace("/intro");
+			  }
+			 });
+			if(id_type == 1){
+				location.replace("/intro");
+			}
+			
+		}
+
+	
+		function delComment(tid,card_id,uid){
+			
+			$.ajax({
+				type: "POST",
+				url: "/card/deleteComment",				
+				data:{
+					"comment_id" : tid,	
+					"card_id" : card_id,				
+					"user_id" : uid,
+				},
+				dataType: "text",
+				cache : false,
+				complete: function(data){
+					if(data.responseText ==1000){
+						alert("댓글 삭제는 글쓴이만 가능합니다.");
+					}
+					else{
+						$(".replysection").html(data.responseText);
+					}
+				}
+			});
+
+		}
+
+		function modifyComment(tid,card_id,uid){
+			
+			$.ajax({
+				type: "POST",
+				url: "/card/modifyComment",				
+				data:{
+					"comment_id" : tid,	
+					"card_id" : card_id,				
+					"user_id" : uid,
+				},
+				dataType: "text",
+				cache : false,
+				complete: function(data){
+					if(data.responseText ==1000){
+						alert("댓글 수정은 글쓴이만 가능합니다.");
+					}
+					else{
+						$(".replysection").html(data.responseText);
+					}
+				}
+			});
+
+		}
+
+		function mk_comment(){
+		$.ajax({
+				url: "/main/mk_comment",
+				type: "POST",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
+				dataType: "html",
+				data:{
+					"card_id":card_num,
+					"comment":encodeURIComponent($("#comment_input").val()),
+					"table":"table_card",
+				},
+				complete:function(xhr,textStatus){
+						if(xhr.responseText == 1000)
+						{
+							alert('댓글 내용을 입력하세요');
+						}
+						else if(xhr.responseText == 2000){
+							alert('다시 입력하세요');
+						}
+						else if(xhr.responseText == 9000){
+							alert('로그인하셔야 합니다.');
+						}
+						else
+						{
+							$(".replysection").html(xhr.responseText);
+						}
+				}
+			});
+		 document.getElementById("comment_input").value="";
+		$('#myModal').modal('show',true);
+
+		}
+	</script>
+
+	<script>
+		jQuery(function($) {
+			var open = false;
+			 
+			function resizeMenu() {
+				if ($(this).width() < 480) {
+					if (!open) {
+						$("#site-nav").hide();
+					}
+					$("#menu-switch").show();                        
+				} else if ($(this).width() >= 480) {
+					if (!open) {
+						$("#site-nav").show();
+					}
+					$("#menu-switch").hide();                        
+				}
+			}
+			 
+			function setupMenuButton() {
+				$("#menu-switch").click(function(e) {
+					e.preventDefault();
+			 
+					if (open) {
+						$("#site-nav").fadeOut();
+						$("#menu-switch").toggleClass("selected");
+					}
+					else {
+						$("#site-nav").fadeIn();
+						$("#menu-switch").toggleClass("selected");
+					}
+					open = !open;
+				});
+			}
+			 
+			 
+			$(window).resize(resizeMenu);
+			 
+			resizeMenu();
+			setupMenuButton();
+			});
+	</script>
+	
+	<title>SHOWINDOW :: 패션의 중심</title>	
+</head>
+<body style="background-color:#e6e6fa;">
+	<div class="page-container">
+		<div id="wrap">
+			<div id="site-header-wrap">
+				<header id="site-header">
+					<div id="site-header-inner">                    
+						<div id="site-logo">
+							<h1><a href="."><img src="/assets/showindow_gray.png" /></a></h1>
+							<!-- <img src="images/logo.png" title="Responsive Menu" /> -->
+						</div>
+			 
+						<!-- mobile switch button -->
+						<nav id="menu-switch-wrap">						
+							<div id="menu-switch"></div>						
+						</nav>
+					</div><!-- #site-header-inner -->
+			 
+					<nav id="site-nav">
+						<ul>
+							<li>
+								<a class="home" href="#"><span class="icon"></span>Home</a>
+							</li>
+							<li>
+								<a class="morefavor" href="/register/moreFavor"><span class="icon"></span>More Favor</a>						
+							</li>
+							<li>
+								<a class="closet" href="/mycloset/index/<?php echo $data['userid']; ?>"><span class="icon"></span>My Closet</a>
+							</li>
+							<li>
+								<a class="whatisthat" href="/main/whatservice"><span class="icon"></span>SHOWINDOW는?</a>
+							</li>
+							<li>
+								<?php
+								/*	if(isLogin()==1){
+										echo '<a class="logout" href="/main/whatservice#"><span class="icon"></span>Log Out</a>';
+									}else{
+										echo '<a class="design" href="/intro"><span class="icon"></span>Home</a>';
+									}*/
+								?>
+								<a class="logout" onClick="javascript:logout();" href="/intro"><span class="icon"></span>Log Out</a>
+							</li>	
+
+						</ul>
+					</nav><!-- #site-nav -->
+
+				</header>
+			</div><!-- site_header-wrat -->
+
+			<hr/>
+
+			<div id="content">
+				<section class="userBased">
+					<div class="panel-group" id="accordion">
+					  	<div class="panel panel-default" style="background-color:#fff; border-radius:7px">
+					    	<div id="recommended_section" class="panel-heading">
+					      		<h4 class="panel-title" style="text-align:right;">
+					        		<a data-toggle="collapse" data-parent="#accordion" href="#recommended_items">
+										<!-- <a href="/mycloset/index/<?php echo $data['userid'];?>"><?php echo $data['name']; ?></a> 님의 예상별점이 높은 패션 아이템들 -->
+										<?php echo $data['name']; ?> 님의 예상별점이 높은 패션 아이템들
+										<span style="right:20px">+</span>
+									</a>
+								</h4>
+							</div>
+							<div id="recommended_items" class="panel-collapse collapse in" style="background-color:#E3E3E3;">
+								<div class="panel-body">					
+<?php
+									$i=0;
+									foreach($data['recommended_items'] as $element){					
+?>
+										<div class="card" id="card<?php echo $i; ?>">
+											<div class="image">
+												<a href="#" data-toggle="modal" 
+													onclick="mk_modal(	'<?php echo $element['item_info'][0]->tid;?>',
+										 								'<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name;?>',
+										 								'<?php echo $data['gender'];?>',
+										 								'<?php echo $element['card_id'];?>');">
+										 			<img src="<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name; ?>"/>
+												 </a>
+								 			</div>
+								 			<div class="card_contents">
+												<div class="imagename"></div>
+												<div class="star">
+<?php
+													echo '
+							      					<div class="rating_item">
+														<div id="rating#'.$i.'">예상별점:';
+															for($j=0; $j<$element['rating']; $j++){
+																echo "<img src=\"/assets/star_score.png\"/>";
+															}
+															echo '
+														</div>
+													</div>
+													';
+?>
+												</div>
+												<div class="scrab_btn">
+<?php
+													$attributes = array('role' => 'form', 'id' => 'upload_action', 'class' => 'share');
+													echo form_open_multipart('/mycloset/scrab_form',$attributes);
+?>
+														<input type="hidden" name="item_img" value="<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name;?>"/>
+														<input type="hidden" name="item_tid" value="<?php echo $element['item_info'][0]->tid;?>"/>
+														<input type="hidden" name="gender" value="<?php echo $data['gender'];?>"/>
+														<input type="hidden" name="page" value="main"/>
+														<!-- <button type="submit" class="btn btn-defauelement"><span class="glyphicon glyphicon-heart-empty"></span></button> -->
+														<button type="submit" style="border:0; background-color:transparent;"><img src="/assets/images/glyphicons_019_heart_empty.png"/></button>
+													</form>
+												</div>
+											</div>
+											
+										</div> <!--card-->
+<?php
+										$i++;
+									}									
+?>
+								</div>
+							</div><!-- recommended_items -->
+						</div>
+
+
+
+						<div class="panel panel-default" style="background-color:#fff; border-radius:7px">
+					    	<div id="user_choice_section" class="panel-heading">
+					      		<h4 class="panel-title" style="text-align:right;">
+					        		<a data-toggle="collapse" data-parent="#accordion" href="#user_choice_items">
+										<!-- <a href="/mycloset/index/<?php echo $data['userid'];?>"><?php echo $data['name']; ?></a> 님이 좋아하시는 아이템들 -->
+										<?php echo $data['name']; ?> 님이 좋아하시는 아이템들
+										<span align="right">+</span>
+									</a>
+								</h4>
+							</div>
+							<div id="user_choice_items" class="panel-collapse collapse" style="background-color:#E3E3E3;">
+								<div class="panel-body">					
+<?php
+									$i=0;
+									foreach($data['user_choice_items'] as $element){					
+?>
+										<div class="card" id="card<?php echo $i; ?>">
+											<div class="image">
+												<a href="#" data-toggle="modal" 
+													onclick="mk_modal(	'<?php echo $element['item_info'][0]->tid;?>',
+										 								'<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name;?>',
+										 								'<?php echo $data['gender'];?>',
+										 								'<?php echo $element['card_id'];?>');">
+										 			<img src="<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name; ?>"/>
+												 </a>
+								 			</div>
+											<div class="imagename"></div>
+											<div class="star">
+<?php
+												echo '
+						      					<div class="rating_item">
+													<div id="rating#'.$i.'"><font style="font-size:12px;">평가하신 별점:</font>';
+														for($j=0; $j<$element['rating']; $j++){
+															echo "<img src=\"/assets/star_score.png\"/>";
+														}
+														echo '
+													</div>
+												</div>
+												';
+?>
+											</div>
+											<div class="scrab_btn">
+<?php
+												$attributes = array('role' => 'form', 'id' => 'upload_action', 'class' => 'share');
+												echo form_open_multipart('/mycloset/scrab_form',$attributes);
+?>
+													<input type="hidden" name="item_img" value="<?php echo $element['item_info'][0]->item_path.$element['item_info'][0]->item_name;?>"/>
+													<input type="hidden" name="item_tid" value="<?php echo $element['item_info'][0]->tid;?>"/>
+													<input type="hidden" name="gender" value="<?php echo $data['gender'];?>"/>
+													<input type="hidden" name="page" value="main"/>
+													<!-- <button type="submit" class="btn btn-defauelement"><span class="glyphicon glyphicon-heart-empty"></span></button> -->
+													<button type="submit" style="border:0; background-color:transparent;"><img src="/assets/images/glyphicons_019_heart_empty.png"/></button>
+												</form>
+											</div>
+										</div> <!--card-->
+<?php
+										$i++;
+									}									
+?>
+								</div>
+							</div><!-- user_choice_items -->
+						</div>
+
+
+
+						<div class="panel panel-default" style="background-color:#fff; border-radius:7px">
+					    	<div id="neighbor_section" class="panel-heading">
+					      		<h4 class="panel-title" style="text-align:right;">
+					        		<a data-toggle="collapse" data-parent="#accordion" href="#neighbor">
+										<!-- <a href="/mycloset/index/<?php echo $data['userid'];?>"><?php echo $data['name']; ?></a> 님과 유사한 패션 취향의 이웃님들 -->
+										<?php echo $data['name']; ?> 님과 유사한 패션 취향의 이웃님들
+										<span align="right">+</span>
+									</a>
+								</h4>
+							</div>
+							<div id="neighbor" style="text-align:center;" class="panel-collapse collapse" style="background-color:#E3E3E3;">
+								<div class="panel-body">					
+<?php
+								if($data['neighbor'][0]['neighbor_serviceid'] != ""){
+									$i=0;
+									foreach($data['neighbor'] as $element){
+?>
+										<div id="neighbor" style="width:200px;">
+											<span>							
+<?php
+												if($element['id_type'] == 0){				// FACEBOOK USER 이면,
+													echo '<img src="https://graph.facebook.com/'.$element['neighbor_accountid'].'/picture"/>';
+												}else{
+													if($element['gender'] == "male"){
+														echo '<img src="http://54.238.143.240/assets/penguin_male.png"/>';
+													}else{
+														echo '<img src="http://54.238.143.240/assets/penguin_female.png"/>';
+													}
+												}
+?>					
+											</span>
+
+											<span>
+												<a href="/mycloset/index/<?php echo $element['neighbor_serviceid'];?>"><?php echo $element['neighbor_name']; ?></a>님
+											</span>
+											
+							
+										</div>
+<?php
+									}
+								}else{
+?>
+										<div id="neighbor" style="text-align:left;">
+											<span> 죄송합니다. 한동 캡스톤 팀 플러그 입니다 ! 아직 저희 서비스의 사용자 수가 적어서, 
+												고객님에게 유사한 사용자를 뽑는데 어려움이 있습니다 ! 더욱 의류 평가수를 늘려주시어,
+												정확한 알고리즘과, 유사한 사용자를 찾을 수 있게 도와주세요 !
+											</span>
+										</div>
+<?php
+								}
+?>
+								</div>
+							</div>
+						</div><!-- neighbor -->
+						<br/><br/><br/><br/><br/>
+					</div>
+				</section>
+			</div><!-- content -->
+
+			<div id="modals">
+				<div id="myModal" class="modal hide fade" tabindex="-1" data-focus-on="input:first">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">								
+						<div class="modal_contents"></div>
+						<div class="modalreply">
+							<div class="input_reply">
+								<div class="rp_id" for="reply"><font style="font-size:10px; color :#b5b5b5"><?php echo $data['name']; ?></font></div>
+								<input type="text" class="text_bar" id="comment_input" name="reply" value="<?php set_value('reply');?>" placeholder="댓글을 써주세요."/>
+								<div class="rp_button">
+									<font  style="cursor:pointer;"onclick="mk_comment()"  id="reply_write_btn">작성</font>
+								</div>
+							</div>
+							<div class="replysection"></div>
+						</div>
+					</div>
+					
+					<div class="modal-footer"></div>
+				</div>
+			</div>
+
+		</div><!--wrap-->
+	</div><!-- page container -->
+
+	
+
+	<script>
+		function setFocus(wheretogo){
+			document.getElementById(wheretogo).scrollIntoView();
+		}
+
+	</script>
+</body>
+<footer id="licence-info" role="licence-info">
+	<small>
+		<a class="scroll" data-toggle="collapse" data-parent="#accordion" onclick="javascript:setFocus('recommended_section');" href="#recommended_items">
+			추천된 아이템들 보기▲
+		</a>
+	</small><br/>
+	<small>
+		<a class="scroll" data-toggle="collapse" data-parent="#accordion" onclick="javascript:setFocus('user_choice_section');" href="#user_choice_items">
+			내가 평가한 아이템들 보기▲
+		</a>
+	</small><br/>
+	<small>
+		<a class="scroll" data-toggle="collapse" data-parent="#accordion" onclick="javascript:setFocus('neighbor_section');" href="#neighbor">
+			나와 유사한 사용자 보기▲
+		</a>
+	</small>
+</footer>
+</html>

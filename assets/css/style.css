@@ -1,0 +1,299 @@
+/*
+ Creating Tiny Icon Responsive Menu
+ Last Updated : 2014-04-23
+ Author : THINKON - www.thinkon.me
+ E-mail : thinkon@thinkon.me
+ */
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url(http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot);
+  src: url(http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'),
+       url(http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff2) format('woff2'),
+       url(http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff) format('woff'),
+       url(http://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf) format('truetype');
+}
+
+body {
+    font-family:'Nanum Gothic'; 
+	font-style:normal; 
+	font-weight:400; 
+	font-size:.95em; 
+	line-height:1.5em; 
+    background-color: #3f4046;
+    color: #626262;
+}
+
+#site-header-wrap {	
+	background-color: #fff;
+	/*width: 1200px;					/*	메뉴바 전체 width */
+	width: 900px;
+	/*height: 116px;*/
+	height: 123px;
+
+	margin:0 auto;
+	
+	-moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -ms-border-radius: 0 0 4px 4px;
+    -o-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+	
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+    -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+    -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .6);	
+}
+	
+	#site-logo {float:left;}
+	#site-logo h1 { margin-top:30px; margin-left:2px; }	
+
+	#site-header-inner {
+		float:left;
+	}	
+	#site-nav {
+		/*float:right; */
+		/*margin-right:20px;*/
+	}	
+	#site-nav ul li {		
+		display:inline-block; 
+		width:120px; 					/*	메뉴 한개 width */
+		height:116px; 
+
+		text-align:center;
+	}	
+	#site-nav ul li a { 
+		display:block;
+		height:100%;
+		text-transform:uppercase;
+		text-decoration:none; 		
+		font-size:1em; 
+		color:#3f4046;
+	}
+	#site-nav ul li a:hover {					
+		background-color: #f5f5f5;	
+		-moz-transition: all .5s linear;
+		-o-transition: all .5s linear;
+		-webkit-transition: all .5s linear;
+		-ms-transition: all .5s linear;
+		transition: all .5s linear;
+	}
+	#site-nav ul li .icon {
+		display:block; 
+		width:100%; 
+		height:72px;
+		/*background:transparent url(../images/tiny-icons.png) no-repeat;*/
+		background:transparent url(../images/tiny-icons2.png) no-repeat;
+	}			
+	
+	
+	#site-nav ul li .home .icon { background-position:52px 24px;}	
+	#site-nav ul li .morefavor .icon { background-position:-98px 24px;}	
+	#site-nav ul li .closet .icon { background-position:-250px 24px;}	
+	#site-nav ul li .whatisthat .icon { background-position:-396px 24px;}
+
+	/*PARK's CUSTOM*/
+	#site-nav ul li .trends .icon { background-position:-550px 24px;}	
+	#site-nav ul li .acounts .icon { background-position:-700px 24px;}	
+	#site-nav ul li .logout .icon { background-position:-856px 24px;}
+
+
+/*#content {width:900px; margin:40px auto; color:#c9c9c9; text-transform:uppercase; word-break:break-all;}*/
+#content {width:900px; margin:40px auto; color:#c9c9c9; text-transform:uppercase; word-break:break-all;}
+#content h2 {font-size:2.2em; margin-bottom:20px; color:#fff; line-height:1em;}
+#content h3 {font-size:1.6em; margin-top:20px; margin-bottom:10px; color:#fff;}
+#content a {color:#4169e1; text-decoration:none;}
+#content a:hover {color:#0000cd; border-bottom:1px dotted #0000cd;}
+
+.mk_content_write_btn{
+	font-color:white;
+}
+#licence-info {
+	position:fixed; 
+	bottom:0; 
+	width:100%; 
+	/*padding:15px 0; */
+	margin-left:-15px;
+	background-color:rgba(0,0,0,.8); 
+	text-align:center;
+	text-transform:uppercase;
+	font-size:11px;
+}		
+
+	#licence-info .licence-display {
+		margin-top:10px;
+	}
+	#licence-info .licence-display img {
+		margin:0 2px;
+	}
+	
+	#licence-info a { text-decoration:none; }
+	#licence-info a:link, #licence-info a:visited { color:#c9c9c9; }	 
+	#licence-info a:hover { color:#f15961; border-bottom:1px dotted #f15961; }
+	#licence-info a:active { color:#f15961;  border-bottom:1px solid #f15961; }
+
+
+#gif_the_end{
+	width:640px;
+	height:480px;
+	background-image : url("/assets/kt패러디gif(640x480).gif");
+	margin : 0 auto;
+}
+
+/*-  MEDIA QUERIES
+ ----------------------------------------------------------------------*/
+/* Disable ios/winmob font size changes */
+@media screen and (min-width: 768px) {
+	#site-nav ul li a .icon:after {
+		content:""; 
+		display:block;
+		/*width:130px; */
+		width:120px; 				/*	마우스 위에 올렸을 때, 색깔 바 */
+		height:9px; 
+		position:absolute; 
+		top:0; 
+		background:#fff; 
+		transition-duration:.5s;
+	}	
+  
+	#site-nav ul li .home:hover .icon:after { background-color:#80aee1; }
+	#site-nav ul li .morefavor:hover .icon:after { background-color:#f57777; }
+	#site-nav ul li .closet:hover .icon:after { background-color:#6fd591; }
+	#site-nav ul li .whatisthat:hover .icon:after { background-color:#eea14e; }
+
+	/* PARK's CUSTOM*/
+	#site-nav ul li .trends:hover .icon:after { background-color:#FF33CC;}	
+	#site-nav ul li .acounts:hover .icon:after { background-color:#009999;}	
+	#site-nav ul li .logout:hover .icon:after { background-color:#000000;}
+
+	#gif_the_end{
+		width:640px;
+		height:480px;
+		background-image : url("/assets/kt패러디gif(640x480).gif");
+		margin : 0 auto;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#site-header-wrap { width:600px; }
+	#site-nav {padding-top:23px;}
+	#site-nav ul li {width:70px; height:70px; overflow:hidden; margin-left:4px;}
+	#site-nav ul li a { 
+		width:100%; 
+		height:100%; 
+		-moz-border-radius: 100%;
+		-webkit-border-radius: 100%;
+		-ms-border-radius: 100%;
+		-o-border-radius: 100%;
+		border-radius: 100%;
+	}
+	#site-nav ul li a:hover { background-color:#f15961; }
+	
+	#site-nav ul li .home { background-color:#80aee1; }
+	#site-nav ul li .morefavor { background-color:#f57777; }
+	#site-nav ul li .closet { background-color:#6fd591; }
+	#site-nav ul li .whatisthat { background-color:#eea14e; }
+	
+	#site-nav ul li .home .icon { background-position:23px -60px;}	
+	#site-nav ul li .morefavor .icon { background-position:-126px -60px;}	
+	#site-nav ul li .closet .icon { background-position:-276px -60px;}	
+	#site-nav ul li .whatisthat .icon { background-position:-427px -60px;}
+
+
+	/* PARK's CUSTOM*/
+	#site-nav ul li .trends { background-color:#FF33CC;}	
+	#site-nav ul li .acounts { background-color:#009999;}	
+	#site-nav ul li .logout { background-color:#000000;}
+
+	#site-nav ul li .trends .icon { background-position:-577px -60px;}	
+	#site-nav ul li .acounts .icon { background-position:-728px -60px;}	
+	#site-nav ul li .logout .icon { background-position:-865px -60px;}
+
+	
+	#content {width:600px;}
+
+	#gif_the_end{
+		/*width:320px;
+		height:240px;*/
+		width:300px;
+		height:225px;
+		background-image : url("/assets/kt패러디gif(320x240).gif");
+		margin : 0 auto;
+	}
+
+}
+
+@media screen and (max-width: 480px) {
+	#site-header-wrap { width:100%; /*height:86px;*/ border-radius:0;}
+	#site-logo h1 { margin-top:19px; margin-left:6%; }	
+	#site-header-inner { width:100%; }
+	#menu-switch-wrap {
+		float:right; 
+		margin-top:19px; 
+		margin-right:4%;
+		display:block;
+	}
+	#menu-switch { 
+		width:48px; 
+		height:48px; 
+		/*background:#6d6e72 url(../images/tiny-icons.png) no-repeat -578px -70px; */
+		background:#6d6e72 url(../images/tiny-icons2.png) no-repeat -578px -70px; 
+		-moz-border-radius: 100%;
+		-webkit-border-radius: 100%;
+		-ms-border-radius: 100%;
+		-o-border-radius: 100%;
+		border-radius: 100%;
+		transition-duration:.3s;
+	}
+	
+	/*#menu-switch.selected, #menu-switch:hover {background:#f15961 url(../images/tiny-icons.png) no-repeat -578px -70px; }*/
+	#menu-switch.selected, #menu-switch:hover {background:#f15961 url(../images/tiny-icons2.png) no-repeat -578px -70px; }
+	
+	#site-nav { width:100%; margin:0; padding-top:12px; margin-bottom:20px;}
+	#site-nav ul li { float:left; width:100%; margin:0; border-bottom:1px solid #3f4046; }
+	#site-nav ul li a { 
+		width:94%; 
+		height:100%; 
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		-ms-border-radius: 0;
+		-o-border-radius: 0;
+		border-radius: 0;
+		text-align:left;
+		line-height:70px;
+		padding-left:6%;
+		background-color:#6d6e72 !important;
+		color:#fff;
+		font-size:1.3em;
+		position:relative;
+	}
+	#site-nav ul li a:hover {background-color:#5c5c5c !important;}
+	#site-nav ul li .icon { float:right; width:70px; height:70px; }
+	#site-nav ul li a .icon:after {
+		content:"";
+		display:block;
+		width:9px;
+		height:70px;
+		position:absolute;
+		top:0;		
+		left:0;
+	}
+	#site-nav ul li .home .icon:after { background-color:#80aee1; }
+	#site-nav ul li .morefavor .icon:after { background-color:#f57777; }
+	#site-nav ul li .closet .icon:after { background-color:#6fd591; }
+	#site-nav ul li .whatisthat .icon:after { background-color:#eea14e; }
+
+	/* PARK's CUSTOM*/
+	#site-nav ul li .trends .icon:after { background-color:#FF33CC;}	
+	#site-nav ul li .acounts .icon:after { background-color:#009999;}	
+	#site-nav ul li .logout .icon:after { background-color:#000000;}
+
+	
+	#content {width:92%; padding:0 4%; margin-top:30px;}
+}
+
+
+}

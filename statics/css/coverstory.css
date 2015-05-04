@@ -1,0 +1,20 @@
+.coverstory{
+	background-color:#000000;
+	color: #FFFFFF;
+	padding-top: 80px;
+	padding-bottom: 20px;
+	height: 120px;
+	width: 100%;
+	margin: 0px;
+}
+a.coverstory_title{
+	background-color:#000000;
+	color: #FFFFFF;
+	text-align:center;
+	margin-left: 280px;
+	font-size: 100px;
+	font-weight: bold;
+}
+a.coverstory_title:hover, a.coverstory_title:active{
+	color:#a9a9a9;
+}
